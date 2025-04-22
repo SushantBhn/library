@@ -25,15 +25,44 @@ function displayBooks() {
     container.textContent = "";
     for(index in myLibrary) {
         let div = document.createElement("div");
-        div.style.whiteSpace = "pre-line"
+        div.style.whiteSpace = "pre-line";
+        div.dataset.id = myLibrary[index].id;
         container.appendChild(div);
         for(prop in myLibrary[index]) {
             div.textContent += `${prop.toUpperCase()} = ${myLibrary[index][prop]}\n`;
         }
     }
+    addButtons();
 }
 
 displayBooks();
+
+//Add remove buttons to the book cards displayed and attach event handler to remove the Book object if clicked
+function addButtons() {
+    let divs = document.querySelectorAll(".container div");
+    Array.from(divs).forEach((div) => {
+        let button = document.createElement("button");
+        button.classList.add("remove");
+        div.appendChild(button);
+        button.textContent = "Remove Book";
+
+        button.addEventListener("click", (event) => {
+            //Find the div where the button was clicked
+            const parentDiv = event.target.parentElement;
+            const bookId = parentDiv.dataset.id;
+            console.log(bookId);
+    
+            //Find and delete the clicked Book object
+            for(index in myLibrary) {
+                if(myLibrary[index].id === bookId) {
+                    myLibrary.splice(index, 1);
+                    displayBooks();
+                    break;
+                }
+            }
+        })
+    });
+}
 
 //Open the modal dialog
 let newBookBtn = document.querySelector("#newbook-btn");
