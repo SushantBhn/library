@@ -22,6 +22,7 @@ addBookToLibrary("The Three Musketeers", "Alexandre Dumas", 398, "Not read");
 let container = document.querySelector(".container");
 
 function displayBooks() {
+    container.textContent = "";
     for(index in myLibrary) {
         let div = document.createElement("div");
         div.style.whiteSpace = "pre-line"
@@ -33,3 +34,21 @@ function displayBooks() {
 }
 
 displayBooks();
+
+//Open the modal dialog
+let newBookBtn = document.querySelector("#newbook-btn");
+let dialog = document.querySelector("#dialog");
+
+newBookBtn.addEventListener("click", (event) => {
+    dialog.showModal();
+});
+
+//Create a new Book object
+let submitBtn = document.querySelector("dialog button");
+
+submitBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    addBookToLibrary(title.value, author.value, pages.value, readStatus.value);
+    displayBooks();
+    dialog.close();
+});
