@@ -19,15 +19,15 @@ addBookToLibrary("The Full Facts Book of Cold Reading", "Ian Rowland", 241, "Not
 addBookToLibrary("The Alchemist", "Paolo Coelho", 208, "Not read");
 addBookToLibrary("The Three Musketeers", "Alexandre Dumas", 398, "Not read");
 
+let container = document.querySelector(".container");
+
 function displayBooks() {
     for(index in myLibrary) {
         let div = document.createElement("div");
         div.style.whiteSpace = "pre-line"
-        document.body.appendChild(div);
+        container.appendChild(div);
         for(prop in myLibrary[index]) {
-            console.log(div.textContent);
             div.textContent += `${prop.toUpperCase()} = ${myLibrary[index][prop]}\n`;
-            console.log(myLibrary[index][prop]);
         }
     }
 }

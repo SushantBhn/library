@@ -1,8 +1,34 @@
-div {
+* {
+    font-family: sans-serif;
+}
+
+body {
+    background-color: papayawhip;
+}
+
+.container div {
     margin-bottom: 15px;
-    border: 1px solid black;
+    border: 2px solid black;
+    width: 350px;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-wrap: normal;
+    box-sizing: border-box;
+    line-height: 3ch;
 }
 
 h1 {
     text-align: center;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 350px);
+    justify-content: center;
+    align-content: center;
+    gap: 15px;
+}
+
+.container div:hover {
+    background-color: bisque;
 }
