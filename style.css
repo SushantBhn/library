@@ -40,8 +40,11 @@ button {
     border-radius: 5px;
 }
 
-#newbook-btn {
+.container div .remove {
+    margin-right: 15px;
+}
 
+#newbook-btn {
     display: block;
     margin: 0 auto;
 }

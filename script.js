@@ -8,6 +8,15 @@ function Book(id, title, author, pages, readStatus) {
     this.readStatus = readStatus;
 }
 
+Book.prototype.toggleReadStatus = function() {
+    if(this.readStatus === "Not read") {
+        this.readStatus = "Read";
+    }
+    else {
+        this.readStatus = "Not read"
+    }
+}
+
 function addBookToLibrary(title, author, pages, readStatus) {
     let id = crypto.randomUUID();
     let book = new Book(id, title, author, pages, readStatus);
@@ -29,6 +38,9 @@ function displayBooks() {
         div.dataset.id = myLibrary[index].id;
         container.appendChild(div);
         for(prop in myLibrary[index]) {
+            if(!myLibrary[index].hasOwnProperty(prop)) {
+                continue;
+            }
             div.textContent += `${prop.toUpperCase()} = ${myLibrary[index][prop]}\n`;
         }
     }
@@ -37,16 +49,18 @@ function displayBooks() {
 
 displayBooks();
 
-//Add remove buttons to the book cards displayed and attach event handler to remove the Book object if clicked
+//Add buttons to the book cards displayed and attach event handlers for respective buttons
 function addButtons() {
     let divs = document.querySelectorAll(".container div");
+    
     Array.from(divs).forEach((div) => {
-        let button = document.createElement("button");
-        button.classList.add("remove");
-        div.appendChild(button);
-        button.textContent = "Remove Book";
+        //Add remove buttons
+        let removeButton = document.createElement("button");
+        removeButton.classList.add("remove");
+        div.appendChild(removeButton);
+        removeButton.textContent = "Remove Book";
 
-        button.addEventListener("click", (event) => {
+        removeButton.addEventListener("click", (event) => {
             //Find the div where the button was clicked
             const parentDiv = event.target.parentElement;
             const bookId = parentDiv.dataset.id;
@@ -60,6 +74,27 @@ function addButtons() {
                     break;
                 }
             }
+        })
+
+        let toggleButton = document.createElement("button");
+        toggleButton.classList.add("toggle");
+        div.append(toggleButton);
+        toggleButton.textContent = "Toggle Read Status";
+
+        toggleButton.addEventListener("click", (event) => {
+            //Find the div where the button was clicked
+            const parentDiv = event.target.parentElement;
+            const bookId = parentDiv.dataset.id;
+            console.log(bookId);
+
+            //Find and toggle the read status of the clicked Book object
+            for(index in myLibrary) {
+                if(myLibrary[index].id === bookId) {
+                    myLibrary[index].toggleReadStatus();
+                    displayBooks();
+                    break;
+                }
+            } 
         })
     });
 }
