@@ -1,19 +1,21 @@
 const myLibrary = [];//Array to store the books in the library
 
-function Book(id, title, author, pages, readStatus) {
-    this.id = id;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.readStatus = readStatus;
-}
-
-Book.prototype.toggleReadStatus = function() {
-    if(this.readStatus === "Not read") {
-        this.readStatus = "Read";
+class Book {
+    constructor(id, title, author, pages, readStatus) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.readStatus = readStatus;
     }
-    else {
-        this.readStatus = "Not read"
+
+    toggleReadStatus() {
+        if(this.readStatus === "Not read") {
+            this.readStatus = "Read";
+        }
+        else {
+            this.readStatus = "Not read"
+        }
     }
 }
 
@@ -38,6 +40,7 @@ function displayBooks() {
         div.dataset.id = myLibrary[index].id;
         container.appendChild(div);
         for(prop in myLibrary[index]) {
+            //Enumerate only over own properties, not inherited from the prototype chain(toggleReadStatus)
             if(!myLibrary[index].hasOwnProperty(prop)) {
                 continue;
             }
